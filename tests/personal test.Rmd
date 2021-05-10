@@ -30,7 +30,7 @@ purrr::map_chr(xmas$Gift.Item, pluralize_gift)
 ```{r}
 make_phrase(num = 10, 
             num_word = "ten", 
-            item = "lord", #original had lords, but dataset has items in singular form
+            item = "lord", #should be singular here
             verb = "a-leaping", 
             adjective = "", 
             location = "")
@@ -42,9 +42,28 @@ xmas$num_word = numbers_to_words(xmas$Day)
 ```
 
 ```{r}
-xmas %>%
+xmas <- xmas %>%
   mutate(
-    Full.Phrase = pmap_chr(list(Day, num_word, Gift.Item, Verb, Adjective, Location), make_phrase)
+    Full_Phrase = pmap_chr(list(Day, num_word, Gift.Item, Verb, Adjective, Location), make_phrase)
   )
+
+```
+
+```{r}
+library(english)
+```
+```{r}
+ordinal(1:5)
+phrases <- pull(xmas, Full.Phrase)
+phrases[1]
+phrases[1] <- paste0("and ", phrases[1], ".")
+phrases[1]
+gift_lines <- str_c(phrases[2:1], collapse = ", \n")
+og <- str_glue("On the second day of Christmas, my true love gave to me,")
+str_glue("{og} \n{gift_lines}")
+```
+
+```{r}
+sing_day(xmas, 2, Full_Phrase)
 ```
 
