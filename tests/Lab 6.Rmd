@@ -1,0 +1,41 @@
+---
+title: "Lab 6"
+author: "Mrinal Lakhotia (Anmol)"
+date: "5/09/2021"
+output: html_document
+---
+
+library(twelvedays)
+https://github.com/Ammlakh/twelvedays.git
+
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lubridate)
+library(stringr)
+library(dplyr)
+library(glue)
+library(purrr)
+```
+
+```{r}
+xmas2 <- read.csv("https://www.dropbox.com/s/ap2hqssese1ki4j/xmas_2.csv?dl=1")
+```
+
+```{r}
+library(xfun)
+xmas2$num_word = numbers_to_words(xmas2$Day)
+```
+
+```{r}
+xmas2 <- xmas2 %>%
+  mutate(Full.Phrase = pmap_chr(list(Day, num_word, Gift.Item, Verb, Adjective, Location), make_phrase))
+```
+
+```{r}
+map(1:12, ~sing_day(xmas2, .x, Full.Phrase)) %>%
+  str_c(collapse = "\n \n") %>%
+  cat()
+```
+

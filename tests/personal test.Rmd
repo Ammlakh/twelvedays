@@ -52,6 +52,7 @@ xmas <- xmas %>%
 ```{r}
 library(english)
 ```
+
 ```{r}
 ordinal(1:5)
 phrases <- pull(xmas, Full.Phrase)
@@ -64,6 +65,7 @@ str_glue("{og} \n{gift_lines}")
 ```
 
 ```{r}
-sing_day(xmas, 2, Full_Phrase)
+sing_day(xmas2, 2, Full_Phrase)
 ```
+
 

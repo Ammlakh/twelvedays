@@ -20,7 +20,7 @@ sing_day <- function(dataset, line, phrase_col){
   val <- line
   num_word <- ordinal(val)
   og <- str_glue("On the {num_word} day of Christmas, my true love gave to me,")
-  phrase <- pull(dataset, {{phrase_col}})
+  phrase <- dataset %>% pull( {{phrase_col}})
   phrase[1] <- paste0("and ", phrase[1], ".")
   items <- str_c(phrase[val:1], collapse = ", \n")
   str_glue("{og} \n{items}")
