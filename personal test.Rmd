@@ -1,0 +1,29 @@
+---
+title: "Lab 6"
+author: "Mrinal Lakhotia (Anmol)"
+date: "5/9/2021"
+output: html_document
+---
+
+```{r}
+xmas <- read.csv("https://www.dropbox.com/s/e584pryn8evm1gz/xmas.csv?dl=1")
+```
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lubridate)
+library(stringr)
+library(dplyr)
+library(glue)
+library(purrr)
+
+```
+
+```{r}
+pluralize_gift(xmas$Gift.Item)
+```
+```{r}
+purrr::map_chr(xmas$Gift.Item, pluralize_gift)
+```
+
