@@ -17,14 +17,14 @@
 #' @export
 
 
-
 make_phrase <- function(num, num_word, item, verb, adjective, location){
-  item <- str_replace_na(item, "")
-  verb <- str_replace_na(verb, "")
-  adjective <- str_replace_na(adjective, "")
-  location <- str_replace_na(location, "")
-  #????
-
-
+  item <- replace_na(item, "")
+  verb <- replace_na(verb, "")
+  adjective <- replace_na(adjective, "")
+  location <- replace_na(location, "")
+  if (num > 1) {
+    item <- pluralize_gift(item)
+  }
+  str_squish(paste(num_word, adjective, item, verb, location, sep = " "))
 }
 
