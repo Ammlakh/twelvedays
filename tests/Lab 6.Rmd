@@ -10,6 +10,7 @@ https://github.com/Ammlakh/twelvedays.git
 
 
 ```{r}
+library(twelvedays)
 library(readr)
 library(tidyverse)
 library(lubridate)
@@ -21,46 +22,12 @@ library(english)
 ```
 
 ```{r}
-library(twelvedays)
 xmas2 <- read.csv("https://www.dropbox.com/s/ap2hqssese1ki4j/xmas_2.csv?dl=1")
 ```
 
 ```{r}
 library(xfun)
 xmas2$num_word = numbers_to_words(xmas2$Day)
-```
-
-```{r}
-pluralize_gift <- function(gift){
-  if(str_detect(gift, "y")){
-    gift <- str_replace(gift, "y", "ies")
-  } else if(str_detect(gift, "oo")){
-    gift <- str_replace(gift, "oo", "ee")
-  } else{
-    gift <- paste0(gift, "s")
-  }
-}
-
-make_phrase <- function(num, num_word, item, verb, adjective, location){
-  item <- replace_na(item, "")
-  verb <- replace_na(verb, "")
-  adjective <- replace_na(adjective, "")
-  location <- replace_na(location, "")
-  if (num > 1) {
-    item <- pluralize_gift(item)
-  }
-  str_squish(paste(num_word, adjective, item, verb, location, sep = " "))
-}
-
-sing_day <- function(dataset, line, phrase_col){
-  val <- line
-  num_word <- ordinal(val)
-  og <- str_glue("On the {num_word} day of Christmas, my true love gave to me,")
-  phrase <- dataset %>% pull( {{phrase_col}})
-  phrase[1] <- paste0("and ", phrase[1], ".")
-  items <- str_c(phrase[val:1], collapse = ", \n")
-  str_glue("{og} \n{items}")
-}
 ```
 
 ```{r}
@@ -73,7 +40,40 @@ map(1:12, ~sing_day(xmas2, .x, Full.Phrase)) %>%
   str_c(collapse = "\n \n") %>%
   cat()
 ```
-```{r}
-make_phrase(5, "five", "fruit", "went", "tasty", "home")
-```
 
+I added the functions at the end just in case you wanted to take a look (please don't mark me down for extra output):
+I put it in r code so the formatting wouldn't be cluttered, but I commented it so you would know that my functions were being pulled from my package from github.
+
+
+```{r}
+#pluralize_gift <- function(gift){
+#  if(str_detect(gift, "y")){
+#    gift <- str_replace(gift, "y", "ies")
+#  } else if(str_detect(gift, "oo")){
+#    gift <- str_replace(gift, "oo", "ee")
+#  } else{
+#    gift <- paste0(gift, "s")
+#  }
+#}
+#
+#make_phrase <- function(num, num_word, item, verb, adjective, location){
+#  item <- replace_na(item, "")
+#  verb <- replace_na(verb, "")
+#  adjective <- replace_na(adjective, "")
+#  location <- replace_na(location, "")
+#  if (num > 1) {
+#    item <- pluralize_gift(item)
+#  }
+#  str_squish(paste(num_word, adjective, item, verb, location, sep = " "))
+#}
+#
+#sing_day <- function(dataset, line, phrase_col){
+#  val <- line
+#  num_word <- ordinal(val)
+#  og <- str_glue("On the {num_word} day of Christmas, my true love gave to me,")
+#  phrase <- dataset %>% pull( {{phrase_col}})
+#  phrase[1] <- paste0("and ", phrase[1], ".")
+#  items <- str_c(phrase[val:1], collapse = ", \n")
+#  str_glue("{og} \n{items}")
+#}
+```
