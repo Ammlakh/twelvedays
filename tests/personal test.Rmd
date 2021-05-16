@@ -46,7 +46,8 @@ xmas <- xmas %>%
   mutate(
     Full_Phrase = pmap_chr(list(Day, num_word, Gift.Item, Verb, Adjective, Location), make_phrase)
   )
-
+xmas <- xmas %>%
+  mutate(Full.Phrase = pmap_chr(list(Day, num_word, Gift.Item, Verb, Adjective, Location), make_phrase))
 ```
 
 ```{r}
